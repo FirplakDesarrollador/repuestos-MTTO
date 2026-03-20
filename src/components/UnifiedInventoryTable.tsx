@@ -14,6 +14,7 @@ interface SparePart {
     Ubicación: string
     Minimo: string
     'Stock actual': string
+    Imagen?: string
     [key: string]: any
 }
 
@@ -219,6 +220,7 @@ export default function UnifiedInventoryTable({ externalPlantFilter, onClearPlan
                         <thead className="bg-gray-50/50">
                             <tr>
                                 <th className="px-4 py-4 text-center text-[10px] font-bold text-gray-400 uppercase tracking-wider w-32">Stock Actual</th>
+                                <th className="px-4 py-4 text-center text-[10px] font-bold text-gray-400 uppercase tracking-wider w-20">Imagen</th>
                                 <th className="px-4 py-4 text-center text-[10px] font-bold text-gray-400 uppercase tracking-wider w-20">Mín</th>
                                 <th className="px-4 py-4 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Descripción</th>
                                 <th className="px-4 py-4 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Ubicación</th>
@@ -270,6 +272,22 @@ export default function UnifiedInventoryTable({ externalPlantFilter, onClearPlan
                                                 </div>
                                             </td>
                                             <td className="px-4 py-3 whitespace-nowrap text-center">
+                                                {part.Imagen ? (
+                                                    <a href={`https://vuiuorjzonpyobpelyld.supabase.co/storage/v1/object/public/Repuestos/${encodeURIComponent(part.Imagen)}`} target="_blank" rel="noopener noreferrer">
+                                                        <img 
+                                                            src={`https://vuiuorjzonpyobpelyld.supabase.co/storage/v1/object/public/Repuestos/${encodeURIComponent(part.Imagen)}`} 
+                                                            alt="Repuesto"
+                                                            className="w-10 h-10 object-cover rounded-lg border border-gray-200 inline-block shadow-sm hover:scale-110 transition-transform bg-white min-w-[40px] min-h-[40px]"
+                                                            loading="lazy"
+                                                        />
+                                                    </a>
+                                                ) : (
+                                                    <div className="w-10 h-10 bg-gray-50 rounded-lg border border-gray-100 mx-auto flex items-center justify-center text-[8px] text-gray-400 font-bold uppercase tracking-wider min-w-[40px] min-h-[40px]">
+                                                        Sin Img
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td className="px-4 py-3 whitespace-nowrap text-center">
                                                 <span className="text-[11px] font-bold text-gray-400">{part.Minimo || '0'}</span>
                                             </td>
                                             <td className="px-4 py-3">
@@ -288,7 +306,7 @@ export default function UnifiedInventoryTable({ externalPlantFilter, onClearPlan
                                 })
                             ) : (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-20 text-center text-gray-400 font-medium">
+                                    <td colSpan={6} className="px-6 py-20 text-center text-gray-400 font-medium">
                                         No se encontraron resultados para "{searchTerm}"
                                     </td>
                                 </tr>
